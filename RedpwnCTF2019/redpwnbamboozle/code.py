@@ -1,5 +1,6 @@
 from PIL import Image
 import numpy as np
+from webcolors import rgb_to_hex
 
 data_file = "data2d.txt"
 
@@ -14,6 +15,15 @@ with open(data_file, "r") as in_file:
 for in_list in data_in[0].strip().split(', '):
     new_list = list(in_list[1:-1].split(" "))
     data1d.append(new_list)
+
+colors = set()
+
+for entry in data1d:
+    entry = list(map(int, entry))
+    colors.add(rgb_to_hex((entry[0], entry[1], entry[2])))
+
+print(colors)
+print(len(colors))
 
 np2d = np.array(data1d).reshape(480000, 3)
 data3d = np2d.astype("uint8")
